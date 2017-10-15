@@ -14,7 +14,8 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Component;
-import ua.lg.karazhanov.configuration.RestController;
+import ua.lg.karazhanov.configuration.rest.RestController;
+import ua.lg.karazhanov.configuration.router.RouteBuilder;
 
 import java.util.Collection;
 
@@ -42,7 +43,7 @@ public class ServerVerticle extends AbstractVerticle {
         //request timeout
         router.route().handler(TimeoutHandler.create(timeout));
         //static route
-        router.route().handler(this::handleStatic);
+//        router.route().handler(this::handleStatic);
         //body handler for forms and uploads
         router.route().handler(BodyHandler.create());
         //cookie decode
@@ -75,11 +76,7 @@ public class ServerVerticle extends AbstractVerticle {
     }
 
     private void startControllers(Router router) {
-        if(controllers != null) {
-            controllers.forEach(restController -> {
-                log.info(restController.toString());
-            });
-        }
+        RouteBuilder.configure(router, controllers);
 //        router.post("").
     }
 

@@ -1,11 +1,18 @@
 package ua.lg.karazhanov.configuration.processors;
 
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.BeansException;
 import org.springframework.beans.factory.config.BeanPostProcessor;
 import org.springframework.core.Ordered;
 import org.springframework.stereotype.Service;
+import rx.Observable;
+import ua.lg.karazhanov.configuration.rest.RestController;
+
+import java.lang.reflect.Method;
+import java.util.concurrent.Future;
 
 @Service
+@Slf4j
 public class ControllerPostBeanProcessor implements BeanPostProcessor, Ordered {
 //    private String apiPath;
 //    @Getter
@@ -23,18 +30,19 @@ public class ControllerPostBeanProcessor implements BeanPostProcessor, Ordered {
 //    }
     @Override
     public Object postProcessBeforeInitialization(Object bean, String beanName) throws BeansException {
-//        Class<?> aClass = bean.getClass();
-//        boolean assignableFrom = RxController.class.isAssignableFrom(aClass);
-//        if (assignableFrom) {
-//            RxController controller = (RxController) bean;
+        Class<?> aClass = bean.getClass();
+        boolean assignableFrom = RestController.class.isAssignableFrom(aClass);
+        if (assignableFrom) {
+            log.info(String.valueOf(aClass));
+            RestController controller = (RestController) bean;
+            Class<? extends RestController> controllerClass = controller.getClass();
+
 //            String path;
-//            if (Utils.hasAnnotation(controller, Api.class)) {
+//            if (Utils.getAnnotation(controller, Api.class)) {
 //                path = apiPath + controller.path();
 //            } else {
 //                path = controller.path();
 //            }
-//            Class<? extends RxController> controllerClass = controller.getClass();
-//            Method[] controllerMethods = controllerClass.getDeclaredMethods();
 //            ControllerModel p = new ControllerModel(
 //                    fromAnotationGet(controllerMethods, controller.isGetAuth()),
 //                    fromAnotationPost(controllerMethods, controller.isPostAuth()),
@@ -49,9 +57,10 @@ public class ControllerPostBeanProcessor implements BeanPostProcessor, Ordered {
 //            } else {
 //                controllerModels.add(p);
 //            }
-//        }
+        }
         return bean;
     }
+
     @Override
     public Object postProcessAfterInitialization(Object bean, String beanName) throws BeansException {
         return bean;
