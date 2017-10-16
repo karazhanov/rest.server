@@ -1,14 +1,14 @@
-package ua.lg.karazhanov.configuration.router.routes;
+package ua.lg.karazhanov.configuration.router.validators;
 
+import io.vertx.ext.web.RoutingContext;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.core.annotation.AnnotationUtils;
 import rx.Observable;
-import ua.lg.karazhanov.configuration.annotations.DELETE;
-import ua.lg.karazhanov.configuration.annotations.GET;
-import ua.lg.karazhanov.configuration.annotations.POST;
-import ua.lg.karazhanov.configuration.annotations.PUT;
-import ua.lg.karazhanov.configuration.router.exceptions.MultiplyRestMethodsException;
-import ua.lg.karazhanov.configuration.router.exceptions.WrongReturnTypeException;
+import ua.lg.karazhanov.configuration.rest.annotations.DELETE;
+import ua.lg.karazhanov.configuration.rest.annotations.GET;
+import ua.lg.karazhanov.configuration.rest.annotations.POST;
+import ua.lg.karazhanov.configuration.rest.annotations.PUT;
+import ua.lg.karazhanov.configuration.router.exceptions.*;
 
 import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
@@ -21,7 +21,7 @@ import static java.util.stream.Collectors.toList;
 @Slf4j
 public class RouteValidator {
 
-    public static Annotation isAnnotated(Method method) throws MultiplyRestMethodsException {
+    public static Annotation isAnnotated(Method method) throws MultiplyRestMethodsException, WrongRestMethodAnnotationException {
         GET _get = AnnotationUtils.getAnnotation(method, GET.class);
         POST _post = AnnotationUtils.getAnnotation(method, POST.class);
         PUT _put = AnnotationUtils.getAnnotation(method, PUT.class);
@@ -31,15 +31,23 @@ public class RouteValidator {
             throw new MultiplyRestMethodsException(method);
         }
         if (annotations.size() == 1) {
+            RoutePathValidator.validateAnnotatedPath(annotations.get(0));
             return annotations.get(0);
         }
         return null;
     }
 
-    public static void validateSignature(Method method) throws WrongReturnTypeException {
+    public static void validateSignature(Method method) throws WrongReturnTypeException, WrongArgumentCountException, WrongArgumentTypeException {
         Class<?> returnType = method.getReturnType();
         if (!returnType.equals(Observable.class)) {
             throw new WrongReturnTypeException(method);
+        }
+        Class<?>[] parameterTypes = method.getParameterTypes();
+        if(parameterTypes.length != 1) {
+            throw new WrongArgumentCountException(method);
+        }
+        if(!parameterTypes[0].equals(RoutingContext.class)) {
+            throw new WrongArgumentTypeException(method);
         }
     }
 }

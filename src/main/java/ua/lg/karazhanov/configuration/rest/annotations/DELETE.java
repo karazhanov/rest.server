@@ -1,4 +1,4 @@
-package ua.lg.karazhanov.configuration.annotations;
+package ua.lg.karazhanov.configuration.rest.annotations;
 
 import java.lang.annotation.ElementType;
 import java.lang.annotation.Retention;
@@ -7,6 +7,6 @@ import java.lang.annotation.Target;
 
 @Target(ElementType.METHOD)
 @Retention(RetentionPolicy.RUNTIME)
-public @interface PUT {
+public @interface DELETE {
     String value();
 }

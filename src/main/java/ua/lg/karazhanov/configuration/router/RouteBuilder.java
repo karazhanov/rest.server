@@ -3,9 +3,8 @@ package ua.lg.karazhanov.configuration.router;
 import io.vertx.ext.web.Router;
 import lombok.extern.slf4j.Slf4j;
 import ua.lg.karazhanov.configuration.rest.RestController;
-import ua.lg.karazhanov.configuration.router.exceptions.MultiplyRestMethodsException;
-import ua.lg.karazhanov.configuration.router.exceptions.WrongReturnTypeException;
-import ua.lg.karazhanov.configuration.router.routes.RouteValidator;
+import ua.lg.karazhanov.configuration.router.exceptions.*;
+import ua.lg.karazhanov.configuration.router.validators.RouteValidator;
 import ua.lg.karazhanov.configuration.router.routes.Routes;
 
 import java.lang.annotation.Annotation;
@@ -38,8 +37,14 @@ public class RouteBuilder {
                 routes.addRoute(annotation, controllerMethod, restController);
             } catch (MultiplyRestMethodsException e) {
                 log.error("MultiplyRestMethodsException in " + e.getControllerMethod());
+            } catch (WrongRestMethodAnnotationException e) {
+                log.error("WrongRestMethodAnnotationException in " + e.getAnnotation());
             } catch (WrongReturnTypeException e) {
                 log.error("WrongReturnTypeException in " + e.getControllerMethod());
+            } catch (WrongArgumentCountException e) {
+                log.error("WrongArgumentCountException in " + e.getControllerMethod());
+            } catch (WrongArgumentTypeException e) {
+                log.error("WrongArgumentTypeException in " + e.getControllerMethod());
             }
         }
         return routes;

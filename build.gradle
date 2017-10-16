@@ -9,6 +9,7 @@ ext{
     vertx = '3.4.1'
     lombok = "1.16.18"
     springboot = "1.5.7.RELEASE"
+    gson = "2.8.2"
 }
 
 targetCompatibility = JavaVersion.VERSION_1_8
@@ -24,7 +25,7 @@ dependencies {
     compile "io.vertx:vertx-web:${vertx}"
     compile "org.springframework.boot:spring-boot-starter:${springboot}"
     compile "io.reactivex:rxjava:${rxjava}"
-//    compile "com.netflix.hystrix:hystrix-core:+"
+    compile "com.google.code.gson:gson:${gson}"
 
     compileOnly "org.projectlombok:lombok:${lombok}"
 }

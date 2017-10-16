@@ -1,9 +1,9 @@
 package ua.lg.karazhanov.configuration.router.routes;
 
-import ua.lg.karazhanov.configuration.annotations.DELETE;
-import ua.lg.karazhanov.configuration.annotations.GET;
-import ua.lg.karazhanov.configuration.annotations.POST;
-import ua.lg.karazhanov.configuration.annotations.PUT;
+import ua.lg.karazhanov.configuration.rest.annotations.DELETE;
+import ua.lg.karazhanov.configuration.rest.annotations.GET;
+import ua.lg.karazhanov.configuration.rest.annotations.POST;
+import ua.lg.karazhanov.configuration.rest.annotations.PUT;
 import ua.lg.karazhanov.configuration.rest.RestController;
 
 import java.lang.annotation.Annotation;
