@@ -1,2 +1,4 @@
 rootProject.name = 'rest.server'
-
+include 'vert.x.rest.core'
+include 'vert.x.rest.annotations'
+include 'vert.x.rest.annotations.processor'

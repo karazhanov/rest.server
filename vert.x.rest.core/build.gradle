@@ -1,0 +1,35 @@
+plugins {
+    id "net.ltgt.apt" version "0.12"
+}
+
+group 'vert.x.rest'
+version '1.0-SNAPSHOT'
+//
+//ext{
+//    //dependencies versions
+//    rxjava = '1.2.5'
+//    vertx = '3.4.1'
+//    lombok = "1.16.18"
+//    springboot = "1.5.7.RELEASE"
+//    gson = "2.8.2"
+//}
+
+dependencies {
+//    compile "io.vertx:vertx-core:${vertx}"
+//    compile "io.vertx:vertx-web:${vertx}"
+//    compile "org.springframework.boot:spring-boot-starter:${springboot}"
+//    compile "io.reactivex:rxjava:${rxjava}"
+//    compile "com.google.code.gson:gson:${gson}"
+
+    // TODO change to compileOnly
+    compile project(':vert.x.rest.annotations')
+
+    compileOnly project(':vert.x.rest.annotations.processor')
+    apt project(':vert.x.rest.annotations.processor')
+//    compileOnly project(':vert.x.rest.annotations.processor')
+
+    compileOnly "org.projectlombok:lombok:${lombok}"
+    apt "org.projectlombok:lombok:${lombok}"
+
+//    compileOnly "org.projectlombok:lombok:${lombok}"
+}

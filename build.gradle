@@ -1,31 +1,30 @@
-apply plugin: 'java'
-
 group 'vert.x.rest'
 version '1.0-SNAPSHOT'
 
-ext{
-    //dependencies versions
-    rxjava = '1.2.5'
-    vertx = '3.4.1'
-    lombok = "1.16.18"
-    springboot = "1.5.7.RELEASE"
-    gson = "2.8.2"
+subprojects {
+    apply plugin: "java"
+    tasks.withType(JavaCompile) {
+        targetCompatibility = JavaVersion.VERSION_1_8
+        sourceCompatibility = JavaVersion.VERSION_1_8
+    }
+    repositories {
+        jcenter()
+    }
+    ext{
+        //dependencies versions
+        rxjava = '1.2.5'
+        vertx = '3.4.1'
+        lombok = "1.16.18"
+        springboot = "1.5.7.RELEASE"
+        gson = "2.8.2"
+    }
+
+    dependencies {
+        compile "io.vertx:vertx-core:${vertx}"
+        compile "io.vertx:vertx-web:${vertx}"
+        compile "org.springframework.boot:spring-boot-starter:${springboot}"
+        compile "io.reactivex:rxjava:${rxjava}"
+        compile "com.google.code.gson:gson:${gson}"
+    }
 }
 
-targetCompatibility = JavaVersion.VERSION_1_8
-sourceCompatibility = JavaVersion.VERSION_1_8
-
-repositories {
-    jcenter()
-    maven { url "http://repo.spring.io/libs-release" }
-}
-
-dependencies {
-    compile "io.vertx:vertx-core:${vertx}"
-    compile "io.vertx:vertx-web:${vertx}"
-    compile "org.springframework.boot:spring-boot-starter:${springboot}"
-    compile "io.reactivex:rxjava:${rxjava}"
-    compile "com.google.code.gson:gson:${gson}"
-
-    compileOnly "org.projectlombok:lombok:${lombok}"
-}
