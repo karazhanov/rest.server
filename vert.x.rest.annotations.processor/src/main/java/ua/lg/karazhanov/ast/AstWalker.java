@@ -1,7 +1,7 @@
 package ua.lg.karazhanov.ast;
 
 import com.sun.source.util.Trees;
-import ua.lg.karazhanov.ComponentBuilder;
+import ua.lg.karazhanov.builders.ComponentBuilder;
 import ua.lg.karazhanov.generator.ComponentGenerator;
 
 import javax.annotation.processing.ProcessingEnvironment;
@@ -31,7 +31,9 @@ public class AstWalker extends ElementScanner8<Void, Void> {
     public Void visitExecutable(ExecutableElement e, Void aVoid) {
         if (e.getKind() == METHOD) {
             ComponentBuilder componentBuilder = ComponentGenerator.generateComponent(e, mOriginElement, mTrees);
-            components.add(componentBuilder);
+            if (componentBuilder != null) {
+                components.add(componentBuilder);
+            }
         }
         return super.visitExecutable(e, aVoid);
     }

@@ -18,7 +18,7 @@ public class HelloController extends RestController {
     }
 
     @GET("/hello/:l")
-    public Observable<?> observable(@Path long l, @Query Object o) {
+    public Observable<?> test1(@Path long l, @Query Object o) {
         return Observable.just("HELLO");
     }
 
@@ -27,19 +27,19 @@ public class HelloController extends RestController {
         String id = routingContext.request().getParam("id");
         return Observable.just("HELLO " + id);
     }
-
-    @PUT("/:id")
-    public Observable<Object> observableID(Object routingContext) {
-        return Observable.just("HELLO ");
-    }
-
-    @POST("/bytracker/:trackerId/test?uid=:uid&test=t")
-    public Observable<?> future(RoutingContext routingContext) {
-        return null;
-    }
-
-    @POST("/{id}")
-    public void aVoid() {
-        System.out.println("HELLO");
-    }
+//
+//    @PUT("/:id")
+//    public Observable<Object> observableID(Object routingContext) {
+//        return Observable.just("HELLO ");
+//    }
+//
+//    @POST("/bytracker/:trackerId/test?uid=:uid&test=t")
+//    public Observable<?> future(RoutingContext routingContext) {
+//        return null;
+//    }
+//
+//    @POST("/{id}")
+//    public void aVoid() {
+//        System.out.println("HELLO");
+//    }
 }
