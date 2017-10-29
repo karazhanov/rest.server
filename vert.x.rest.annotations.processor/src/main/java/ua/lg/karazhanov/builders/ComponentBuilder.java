@@ -9,6 +9,8 @@ import com.sun.tools.javac.util.List;
 import io.vertx.ext.web.RoutingContext;
 import org.springframework.stereotype.Component;
 import ua.lg.karazhanov.VertxController;
+import ua.lg.karazhanov.types.MethodInfo;
+import ua.lg.karazhanov.types.REQUEST_METHOD;
 
 import javax.lang.model.element.Modifier;
 
@@ -34,12 +36,13 @@ public class ComponentBuilder {
         this.basePath = basePath;
     }
 
-    public void setPathUrl(String pathUrl) {
-        this.pathUrl = pathUrl;
+    public void setMethodInfo(MethodInfo methodInfo) {
+        this.pathUrl = methodInfo.getMethodPath();
+        this.requestMethodType = methodInfo.getMethodType();
     }
 
-    public void setRequestMethodType(REQUEST_METHOD requestMethodType) {
-        this.requestMethodType = requestMethodType;
+    public String getFullPath() {
+        return basePath + pathUrl;
     }
 
     public void setMethodName(String methodName) {
@@ -82,9 +85,5 @@ public class ComponentBuilder {
                 .addField(fieldPath)
                 .addMethod(handle)
                 .build();
-    }
-
-    public enum REQUEST_METHOD {
-        GET, POST, PUT, DELETE
     }
 }

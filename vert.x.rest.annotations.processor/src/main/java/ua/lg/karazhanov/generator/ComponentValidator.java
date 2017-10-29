@@ -7,13 +7,15 @@ import javax.lang.model.element.VariableElement;
  */
 class ComponentValidator {
 
-    static void validatePathContainParam(VariableElement param) {
-
+    static boolean isValidPathContainParam(VariableElement param, String fullPath) {
+        return fullPath.contains(":"+param.getSimpleName());
     }
 
-    static void validateType(VariableElement param) {
-
+    public static boolean isValidPathQueryType(VariableElement param) {
+        return TypeValidator.isBaseOrBoxedType(param);
     }
 
-
+    public static boolean isValidBodyType(VariableElement param) {
+        return !TypeValidator.isBaseOrBoxedType(param);
+    }
 }
